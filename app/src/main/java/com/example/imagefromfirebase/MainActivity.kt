@@ -22,14 +22,11 @@ class MainActivity : AppCompatActivity() {
         val storage = Firebase.storage
         val storageRef =storage.reference
         val pathRef =storageRef.child("vs.jpg")
-        val urlRef = storage.getReferenceFromUrl("gs://imagedownload-b2c53.appspot.com/vs.jpg")
 
-        // var storageRef = storage.reference
-       imageView.load(pathRef)
+        imageView.load(pathRef)
 
 
 
-        //var pathRef  = storageRef.child("image/vs.jpg")
 
     }
 }
