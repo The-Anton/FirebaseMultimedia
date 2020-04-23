@@ -1,9 +1,12 @@
 package com.example.imagefromfirebase
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import coil.api.load
+import com.example.imagefromfirebase.simpleExoPlayer.ExoPlayerAcitvity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -24,6 +27,13 @@ class MainActivity : AppCompatActivity() {
         val pathRef =storageRef.child("vs.jpg")
 
         imageView.load(pathRef)
+
+        val startVideoPlayer_btn =  findViewById<Button>(R.id.btn_startPlayer)
+
+        startVideoPlayer_btn.setOnClickListener {
+            startActivity(Intent(this, ExoPlayerAcitvity::class.java));
+
+        }
 
 
 
