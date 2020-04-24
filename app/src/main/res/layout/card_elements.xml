@@ -1,52 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".simpleExoPlayer.ExoPlayerAcitvity">
-
-    <androidx.cardview.widget.CardView
-        card_view:cardElevation="16dp"
-        card_view:cardPreventCornerOverlap="false"
-        android:layout_width="375dp"
-        android:layout_height="310dp"
-        android:layout_marginBottom="406dp"
-        android:background="@drawable/shadow"
-        android:dividerHeight="0.0px"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.cardview.widget.CardView android:layout_height="325dp"
+        android:layout_width="match_parent"
         app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        card_view:cardElevation="16dp"
+        android:background="@drawable/shadow"
+        card_view:cardPreventCornerOverlap="false"
+        android:dividerHeight="0.0px">
 
         <LinearLayout
-            android:layout_width="375dp"
-            android:layout_height="310dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/card_round"
             android:elevation="20dp"
             android:orientation="vertical"
             android:outlineAmbientShadowColor="@color/cardview_dark_background"
             android:padding="10dp">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp">
-
                 <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                     android:id="@+id/exo_player_view"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.419"
-                    tools:ignore="MissingConstraints"></com.google.android.exoplayer2.ui.SimpleExoPlayerView>
+                    ></com.google.android.exoplayer2.ui.SimpleExoPlayerView>
 
             </LinearLayout>
 
@@ -71,11 +53,16 @@
                 </LinearLayout>
 
 
+
+
+
+
             </LinearLayout>
 
         </LinearLayout>
 
 
+
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

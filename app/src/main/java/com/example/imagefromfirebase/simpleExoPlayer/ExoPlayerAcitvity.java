@@ -50,7 +50,6 @@ import com.google.firebase.storage.StorageReference;
     }
 
      private void getUrl() {
-         uri =findViewById(R.id.uri);
          pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
          {
              @Override
@@ -58,7 +57,6 @@ import com.google.firebase.storage.StorageReference;
              {
                  videoURL =downloadUrl.toString();
                  Log.d("====>",videoURL);
-                 uri.setText(videoURL);
                  try {
                      setupVideoPlayer();
 
