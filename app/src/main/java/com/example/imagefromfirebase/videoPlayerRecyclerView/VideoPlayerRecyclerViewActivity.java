@@ -32,6 +32,7 @@ public class VideoPlayerRecyclerViewActivity extends AppCompatActivity {
         setUpFirebase();
 
 
+        loadDataFromFirebase();
         setUpRecyclerView();
     }
 
@@ -46,5 +47,43 @@ public class VideoPlayerRecyclerViewActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    public void loadDataFromFirebase() {
+        if (videoPlayerCardArrayList.size() > 0) {
+            videoPlayerCardArrayList.clear();
+        }
+
+        db.document("/Army Institute Of Technology/Events/PACE/Event Details")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                           @Override
+                                           public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                               if (task.isSuccessful()) {
+                                                   DocumentSnapshot document = task.getResult();
+                                                   if (document.exists()) {
+                                                       long size = document.getLong("Names.0");
+                                                       int i = 1;
+                                                       while (size > 0) {
+
+                                                       }
+                                                   } else {
+                                                       Log.d("Error", "No such document");
+                                                   }
+                                               } else {
+                                                   Log.d("Error", "get failed with ", task.getException());
+                                               }
+                                               adapter = new VideoPlayerRecyclerViewAdapter(VideoPlayerRecyclerViewActivity.this, videoPlayerCardArrayList);
+                                               mRecyclerView.setAdapter(adapter);
+                                           }
+
+                                       }
+                )
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VideoPlayerRecyclerViewActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
 
 }
