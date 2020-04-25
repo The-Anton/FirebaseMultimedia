@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +44,9 @@ import com.google.firebase.storage.StorageReference;
      FirebaseStorage storage = FirebaseStorage.getInstance();
      StorageReference storageRef = storage.getReference();
      StorageReference pathReference = storageRef.child("1AdvancedKotlinIntro.mp4");
+     private boolean playWhenReady = true;
+     private int currentWindow = 0;
+     private long playbackPosition = 0;
 
 
      String videoURL;
@@ -52,7 +57,7 @@ import com.google.firebase.storage.StorageReference;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_exo_player);
         exoPlayerView = (SimpleExoPlayerView) findViewById(R.id.exo_player_view);
-        getUrl();
+        //getUrl();
     }
 
      private void getUrl() {
@@ -75,6 +80,48 @@ import com.google.firebase.storage.StorageReference;
 
      }
 
+     @Override
+     protected void onPostResume() {
+         super.onPostResume();
+     }
+
+     @Override
+     protected void onStart() {
+         super.onStart();
+         if (Util.SDK_INT >= 24) {
+             getUrl();
+         }
+     }
+
+     @Override
+     protected void onPause() {
+         super.onPause();
+         if (Util.SDK_INT >= 24) {
+             releasePlayer();
+         }
+     }
+
+     @Override
+     protected void onStop() {
+         super.onStop();
+         if (Util.SDK_INT >= 24) {
+             releasePlayer();
+         }
+
+     }
+
+
+
+     private void releasePlayer() {
+         if (exoPlayer != null) {
+             playWhenReady = exoPlayer.getPlayWhenReady();
+             playbackPosition = exoPlayer.getCurrentPosition();
+             currentWindow = exoPlayer.getCurrentWindowIndex();
+             exoPlayer.release();
+             exoPlayer = null;
+         }
+     }
+
      private void setupVideoPlayer() {
 
          BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -89,8 +136,12 @@ import com.google.firebase.storage.StorageReference;
          ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
          MediaSource mediaSource = new ExtractorMediaSource(videoURI, dataSourceFactory, extractorsFactory, null , null);
 
+
+
          exoPlayerView.setPlayer(exoPlayer);
-         exoPlayer.prepare(mediaSource);
+         exoPlayer.setPlayWhenReady(playWhenReady);
+         exoPlayer.seekTo(currentWindow, playbackPosition);
+         exoPlayer.prepare(mediaSource, false, false);
          exoPlayer.setPlayWhenReady(true);
      }
 
